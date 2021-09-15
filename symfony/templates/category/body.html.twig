@@ -1,0 +1,38 @@
+{% extends 'base/home.html.twig' %}
+
+{% block content %}
+    <div class="card text-dark bg-light mb-3">
+        <div class="card-header"><h3>{{ category.name }}</h3></div>
+        <div class="card-body">
+            <div class="list-group">
+                {% for name,file in files %}
+                    <div class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-2">{{ name }}</h5>
+                            <button class="btn btn-success">Open</button>
+                        </div>
+
+                        <div class="tab-content" id="nav-tabContent">
+                            {% for fileVersion in file %}
+                                <div class="mb-2 tab-pane fade  {% if loop.last %} show active {% endif %}"
+                                     id="nav-{{ fileVersion.name }}" role="tabpanel"
+                                     aria-labelledby="nav-{{ fileVersion.name }}-tab">{{ fileVersion.description }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="nav nav-tabs mb-2" id="nav-tab" role="tablist" style="flex-wrap:nowrap; overflow: auto;">
+                            <hr>
+                            {% for fileVersion in file %}
+                                <button class="nav-link {% if loop.last %} active {% endif %}"
+                                        style="margin-bottom: 0"
+                                        id="nav-{{ fileVersion.name }}-tab" data-bs-toggle="tab"
+                                        data-bs-target="#nav-{{ fileVersion.name }}" type="button" role="tab"
+                                        aria-controls="nav-{{ fileVersion.name }}"
+                                        aria-selected="false">{% if loop.last %} Latest {% else %}{{ fileVersion.date|date('d.m.Y') }}{% endif %}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

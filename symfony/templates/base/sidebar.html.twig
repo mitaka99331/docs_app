@@ -1,0 +1,22 @@
+<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 mt-3">
+    <ul class="list-unstyled ps-0">
+        {% for key, category in categories %}
+            {% if category.children is defined %}
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+                            data-bs-target="#{{ key }}-collapse" aria-expanded="true">
+                        {{ key }}
+                    </button>
+                    <div class="collapse" id="{{ key }}-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            {% for key, subcategory in category.children %}
+                                <li><a href="{{ url('category_index', {categoryId: subcategory.child}) }}"
+                                       class="link-dark rounded">{{ key }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
